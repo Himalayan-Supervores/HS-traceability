@@ -1,0 +1,25 @@
+version: "3.8"
+
+# Optional convenience file for local development. Not required if you
+# already have PostgreSQL installed, or if you point DATABASE_URL at a
+# hosted database (Neon, Supabase, Railway...) from the start.
+#
+# Usage:
+#   docker compose up -d
+#   # then in .env: DATABASE_URL="postgresql://postgres:postgres@localhost:5432/nagro"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: nagro
+    ports:
+      - "5432:5432"
+    volumes:
+      - nagro_pgdata:/var/lib/postgresql/data
+
+volumes:
+  nagro_pgdata:

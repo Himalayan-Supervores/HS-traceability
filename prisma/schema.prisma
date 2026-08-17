@@ -1,0 +1,152 @@
+// ---------------------------------------------------------------------------
+// N-Agro Traceability — Prisma schema
+//
+// Database: PostgreSQL (recommended for production).
+// For a zero-install local test, you can switch `provider` below to
+// "sqlite" and set DATABASE_URL="file:./dev.db" — every field type here is
+// deliberately compatible with both engines (no native Postgres arrays,
+// no enums) so the switch is a two-line change. See README.md.
+// ---------------------------------------------------------------------------
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Single administrator account (extendable to several rows later).
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+  lastLoginAt  DateTime?
+}
+
+/// One row of global configuration: company identity + the domain used to
+/// build GS1 Digital Link URLs (https://{domain}/01/{GTIN}...).
+model Settings {
+  id           String  @id @default("singleton")
+  companyName  String  @default("N-Agro Export Pvt. Ltd.")
+  domain       String  @default("n-agro-demo.vercel.app")
+  country      String  @default("Nepal")
+  contactEmail String?
+  contactPhone String?
+  logoUrl      String?
+}
+
+/// A farm / grower supplying one or more products.
+model Producer {
+  id             String   @id @default(cuid())
+  name           String
+  farmName       String
+  country        String   @default("Nepal")
+  province       String?
+  district       String?
+  municipality   String?
+  address        String?
+  gpsLat         Float?
+  gpsLng         Float?
+  contactName    String?
+  contactPhone   String?
+  email          String?
+  /// Comma-separated list, e.g. "GlobalG.A.P.,Organic Nepal"
+  certifications String?
+  photoUrl       String?
+  description    String?
+  isActive       Boolean  @default(true)
+  /// When false, only the name + district are ever shown on public pages.
+  isPublic       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  products Product[]
+  lots     Lot[]
+
+  @@index([isActive])
+}
+
+/// A sellable reference. One Product = one GTIN (GS1 Trade Item rule).
+model Product {
+  id             String   @id @default(cuid())
+  /// GS1 Global Trade Item Number — the number that identifies *what* the
+  /// item is to every trading partner. NOT the same thing as `sku` below.
+  gtin           String   @unique
+  /// True for the fictitious demo GTINs seeded with this project.
+  /// Never expose a demo GTIN as if it were a real, GS1-issued number.
+  isDemoGtin     Boolean  @default(false)
+  /// Optional internal reference code (warehouse / ERP SKU). Free text,
+  /// company-specific, and never printed on a GS1 QR Code.
+  sku            String?
+  name           String
+  nameEn         String?
+  category       String
+  variety        String?
+  description    String?
+  producerId     String?
+  producer       Producer? @relation(fields: [producerId], references: [id])
+  originCountry  String   @default("Nepal")
+  originRegion   String?
+  sellingUnit    String?
+  weight         String?
+  packagingType  String?
+  certifications String?
+  photoUrl       String?
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  lots    Lot[]
+  qrCodes QrCode[]
+
+  @@index([category])
+  @@index([isActive])
+}
+
+/// A traceable batch of a given product.
+model Lot {
+  id                String    @id @default(cuid())
+  lotNumber         String    @unique
+  productId         String
+  product           Product   @relation(fields: [productId], references: [id])
+  producerId        String?
+  producer          Producer? @relation(fields: [producerId], references: [id])
+  harvestDate       DateTime?
+  packingDate       DateTime?
+  shippingDate      DateTime?
+  quantity          Float?
+  unit              String?
+  destination       String?
+  storageConditions String?
+  /// in_production | packed | shipped | delivered
+  status            String    @default("in_production")
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  qrCodes QrCode[]
+
+  @@index([status])
+  @@index([productId])
+}
+
+/// A generated GS1 Digital Link QR Code. Kept separate from Product/Lot so
+/// the same code can be regenerated or deactivated without ever changing
+/// the URL that is already printed on packaging.
+model QrCode {
+  id             String   @id @default(cuid())
+  gtin           String
+  lotId          String?
+  lot            Lot?     @relation(fields: [lotId], references: [id])
+  productId      String
+  product        Product  @relation(fields: [productId], references: [id])
+  digitalLinkUrl String
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+
+  @@index([productId])
+  @@index([lotId])
+}

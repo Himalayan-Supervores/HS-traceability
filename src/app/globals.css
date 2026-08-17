@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-line;
+  }
+  ::selection {
+    @apply bg-marigold-100;
+  }
+  :focus-visible {
+    outline: 2px solid theme("colors.marigold.500");
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .label-eyebrow {
+    @apply font-mono text-[11px] uppercase tracking-[0.14em] text-sage;
+  }
+
+  .field-input {
+    @apply w-full rounded-md border border-line bg-white px-3 py-2 text-sm text-ink shadow-sm
+      placeholder:text-sage focus:border-pine-600 focus:outline-none focus:ring-1 focus:ring-pine-600;
+  }
+
+  .field-label {
+    @apply mb-1 block text-xs font-medium text-ink/70;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-pine-700 px-4 py-2
+      text-sm font-medium text-white shadow-sm transition hover:bg-pine-900 disabled:opacity-50;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-line bg-white px-4 py-2
+      text-sm font-medium text-ink shadow-sm transition hover:bg-pine-50 disabled:opacity-50;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-red-200 bg-white px-4 py-2
+      text-sm font-medium text-red-700 shadow-sm transition hover:bg-red-50 disabled:opacity-50;
+  }
+
+  .card {
+    @apply rounded-lg border border-line bg-white shadow-card;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
