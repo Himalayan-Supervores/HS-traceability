@@ -15,7 +15,7 @@
   "dependencies": {
     "@prisma/client": "5.19.1",
     "bcryptjs": "2.4.3",
-    "bwip-js": "4.11.3",
+    "bwip-js": "^4.11.3",
     "clsx": "2.1.1",
     "jose": "5.9.6",
     "lucide-react": "0.445.0",
