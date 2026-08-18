@@ -2,6 +2,7 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { PageHeader } from "@/components/admin/ui";
 import { TraceabilityChain, type TraceStep } from "@/components/public/TraceabilityChain";
+import { LotSelector } from "@/components/admin/LotSelector";
 import { formatDate } from "@/lib/utils";
 
 export default async function TraceabilityPage({ searchParams }: { searchParams: { lotId?: string } }) {
@@ -60,16 +61,7 @@ export default async function TraceabilityPage({ searchParams }: { searchParams:
         description="Producer → Product → Lot → Packing → Shipment, for any batch."
       />
 
-      <form method="get" className="mb-6 max-w-md">
-        <label className="field-label">Select a lot</label>
-        <select name="lotId" defaultValue={selectedLotId} className="field-input" onChange={(e) => e.currentTarget.form?.submit()}>
-          {lots.map((l) => (
-            <option key={l.id} value={l.id}>
-              {l.lotNumber} — {l.product.name}
-            </option>
-          ))}
-        </select>
-      </form>
+      <LotSelector lots={lots} selectedLotId={selectedLotId} />
 
       {!lot ? (
         <p className="text-sage">No lot recorded yet. Create one from Lots &gt; New lot.</p>

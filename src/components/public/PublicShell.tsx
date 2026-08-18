@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 export function PublicShell({
   companyName,
   children,
@@ -8,23 +7,20 @@ export function PublicShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-pine-900">
+    <div className="min-h-screen bg-pine-50">
       <div className="mx-auto max-w-md px-4 py-6 sm:max-w-lg sm:py-10">
         <header className="mb-6 flex flex-col items-center justify-center gap-1">
           <img src="/logo.png" alt={companyName} className="h-14 w-auto" />
-          <p className="label-eyebrow text-pine-300">Traceability</p>
+          <p className="label-eyebrow text-sage">Traceability</p>
         </header>
-
         <div className="rounded-2xl bg-paper shadow-xl">{children}</div>
-
-        <footer className="mt-6 text-center text-xs text-pine-300">
+        <footer className="mt-6 text-center text-xs text-sage">
           <p>Powered by GS1 Digital Link — scan any {companyName} QR Code to verify origin.</p>
         </footer>
       </div>
     </div>
   );
 }
-
 export function InfoRow({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
@@ -34,7 +30,6 @@ export function InfoRow({ label, value }: { label: string; value?: string | null
     </div>
   );
 }
-
 export function NotFoundCard({ title, message }: { title: string; message: string }) {
   return (
     <div className="p-8 text-center">

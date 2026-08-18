@@ -34,11 +34,11 @@ function LoginForm() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-pine-900 px-4">
+    <div className="flex min-h-screen items-center justify-center bg-pine-50 px-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center text-center">
           <img src="/logo.png" alt="Himalayan Supervores" className="mb-3 h-16 w-auto" />
-          <p className="text-sm text-pine-200">Traceability administration</p>
+          <p className="text-sm text-sage">Traceability administration</p>
         </div>
 
         <form onSubmit={handleSubmit} className="card space-y-4 p-6">
@@ -82,7 +82,7 @@ function LoginForm() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-xs text-pine-300">
+        <p className="mt-6 text-center text-xs text-sage">
           Seeded demo account: see <code className="font-mono">.env</code> (SEED_ADMIN_EMAIL).
         </p>
       </div>
