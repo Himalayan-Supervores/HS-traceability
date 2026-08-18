@@ -224,9 +224,10 @@ export function ProductForm({
         />
       </Field>
 
-      <Field label="Photo URL">
-        <input className="field-input" value={values.photoUrl} onChange={(e) => set("photoUrl", e.target.value)} />
+      <Field label="Photo">
+        <ImageUpload value={values.photoUrl} onChange={(url) => set("photoUrl", url)} />
       </Field>
+
 
       <Field label="Description">
         <textarea
