@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { computeGtinCheckDigit, cleanGtin } from "@/lib/gs1";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 export type ProducerOption = { id: string; name: string; farmName: string };
 

@@ -19,7 +19,7 @@ export function MobileNav() {
   const pathname = usePathname();
 
   return (
-    <div className="no-print sticky top-0 z-20 border-b border-line bg-pine-900 md:hidden">
+    <div className="no-print sticky top-0 z-20 border-b border-line bg-pine-50 md:hidden">
       <div className="flex items-center gap-2 px-4 py-2.5">
         <img src="/logo.png" alt="Himalayan Supervores" className="h-8 w-auto" />
       </div>
@@ -31,7 +31,7 @@ export function MobileNav() {
               key={item.href}
               href={item.href}
               className={`whitespace-nowrap rounded-full px-3 py-1 text-xs ${
-                active ? "bg-marigold-500 text-white" : "bg-pine-700/60 text-pine-100"
+                active ? "bg-marigold-500 text-white" : "bg-pine-100 text-ink"
               }`}
             >
               {item.label}

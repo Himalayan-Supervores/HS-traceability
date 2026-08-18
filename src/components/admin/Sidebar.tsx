@@ -30,7 +30,7 @@ export function Sidebar({ adminName }: { adminName: string }) {
   const pathname = usePathname();
 
   return (
-    <aside className="no-print fixed inset-y-0 left-0 hidden w-60 flex-col border-r border-line bg-pine-900 md:flex">
+    <aside className="no-print fixed inset-y-0 left-0 hidden w-60 flex-col border-r border-line bg-pine-50 md:flex">
       <div className="flex items-center gap-2 px-5 py-5">
         <img src="/logo.png" alt="Himalayan Supervores" className="h-10 w-auto" />
       </div>
@@ -45,7 +45,7 @@ export function Sidebar({ adminName }: { adminName: string }) {
               href={item.href}
               className={cn(
                 "flex items-center gap-2.5 rounded-md px-3 py-2 text-sm transition",
-                active ? "bg-pine-700 text-white" : "text-pine-200 hover:bg-pine-700/60 hover:text-white"
+                active ? "bg-pine-700 text-white" : "text-ink hover:bg-pine-100 hover:text-pine-900"
               )}
             >
               <Icon className="h-4 w-4" />
@@ -55,9 +55,9 @@ export function Sidebar({ adminName }: { adminName: string }) {
         })}
       </nav>
 
-      <div className="border-t border-pine-700 px-4 py-4">
-        <p className="truncate text-xs text-pine-300">Signed in as</p>
-        <p className="truncate text-sm text-white">{adminName}</p>
+      <div className="border-t border-line px-4 py-4">
+        <p className="truncate text-xs text-sage">Signed in as</p>
+        <p className="truncate text-sm text-ink">{adminName}</p>
         <form action="/api/auth/logout" method="post">
           <LogoutButton />
         </form>
@@ -74,7 +74,7 @@ function LogoutButton() {
         await fetch("/api/auth/logout", { method: "POST" });
         window.location.href = "/login";
       }}
-      className="mt-2 text-xs text-marigold-400 hover:text-marigold-500 hover:underline"
+      className="mt-2 text-xs text-marigold-600 hover:text-marigold-500 hover:underline"
     >
       Sign out
     </button>
