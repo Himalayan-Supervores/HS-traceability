@@ -8,9 +8,9 @@ import {
   Users,
   Package,
   QrCode,
+  Barcode,
   Waypoints,
   Settings,
-  Leaf,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -20,6 +20,8 @@ const NAV = [
   { href: "/admin/producers", label: "Producers", icon: Users },
   { href: "/admin/lots", label: "Lots", icon: Sprout },
   { href: "/admin/qrcodes", label: "QR Codes", icon: QrCode },
+  { href: "/admin/barcodes/gs1", label: "GS1 Barcode", icon: Barcode },
+  { href: "/admin/barcodes/gs1-128", label: "GS1-128", icon: Barcode },
   { href: "/admin/traceability", label: "Traceability", icon: Waypoints },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
@@ -30,13 +32,7 @@ export function Sidebar({ adminName }: { adminName: string }) {
   return (
     <aside className="no-print fixed inset-y-0 left-0 hidden w-60 flex-col border-r border-line bg-pine-900 md:flex">
       <div className="flex items-center gap-2 px-5 py-5">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-marigold-500">
-          <Leaf className="h-4 w-4 text-white" />
-        </div>
-        <div>
-          <p className="font-display text-lg leading-none text-white">N-Agro</p>
-          <p className="text-[11px] leading-none text-pine-300">Traceability</p>
-        </div>
+        <img src="/logo.png" alt="Himalayan Supervores" className="h-10 w-auto" />
       </div>
 
       <nav className="flex-1 space-y-0.5 px-3 py-2">

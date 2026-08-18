@@ -2,7 +2,7 @@ import { SignJWT, jwtVerify } from "jose";
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 
-export const SESSION_COOKIE = "nagro_session";
+export const SESSION_COOKIE = "hs_session";
 const SESSION_DURATION_SECONDS = 60 * 60 * 8; // 8 hours
 
 function getSecretKey() {

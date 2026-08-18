@@ -58,7 +58,7 @@ export function SettingsForm({ initial }: { initial: SettingsValues }) {
           className="field-input font-mono"
           value={values.domain}
           onChange={(e) => set("domain", e.target.value)}
-          placeholder="trace.n-agro.com"
+          placeholder="trace.himalayansupervores.com"
         />
         <p className="mt-1 text-xs text-sage">
           No protocol, no trailing slash. QR Codes will encode{" "}

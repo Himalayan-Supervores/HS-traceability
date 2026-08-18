@@ -5,7 +5,7 @@
  *
  * GTIN (Global Trade Item Number)
  *   The GS1 number that identifies WHAT a trade item is — e.g. "Alphonso
- *   mango, 5 kg carton, packed by N-Agro" — the same way an ISBN identifies
+ *   mango, 5 kg carton, packed by Himalayan Supervores" — the same way an ISBN identifies
  *   a book edition. A GTIN is only valid if it was assigned using a GS1
  *   Company Prefix that GS1 (via the national Member Organisation — GS1
  *   Nepal in this project's case) licensed to the company. This app never
@@ -128,7 +128,7 @@ export const GS1_APPLICATION_IDENTIFIERS = {
 /**
  * Builds the canonical GS1 Digital Link URL for a product, optionally
  * scoped to one lot. `domain` should NOT include a protocol or trailing
- * slash (e.g. "trace.n-agro.com").
+ * slash (e.g. "trace.himalayansupervores.com").
  */
 export function buildDigitalLinkUrl(
   domain: string,

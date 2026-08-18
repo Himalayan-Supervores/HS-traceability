@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Plus, Search } from "lucide-react";
 import { db } from "@/lib/db";
-import { PageHeader, StatusBadge } from "@/components/admin/ui";
+import { PageHeader, StatusBadge, RowDeleteButton } from "@/components/admin/ui";
 import type { Prisma } from "@prisma/client";
 
 export default async function ProducersPage({
@@ -33,7 +33,7 @@ export default async function ProducersPage({
     <div>
       <PageHeader
         title="Producers"
-        description="Farms and growers supplying N-Agro."
+        description="Farms and growers supplying Himalayan Supervores."
         action={
           <Link href="/admin/producers/new" className="btn-primary">
             <Plus className="h-4 w-4" /> New producer
@@ -71,6 +71,7 @@ export default async function ProducersPage({
               <th className="px-4 py-3">Products</th>
               <th className="px-4 py-3">Lots</th>
               <th className="px-4 py-3">Status</th>
+              <th className="px-4 py-3" />
             </tr>
           </thead>
           <tbody className="divide-y divide-line">
@@ -88,11 +89,17 @@ export default async function ProducersPage({
                 <td className="px-4 py-3">
                   <StatusBadge status={p.isActive ? "active" : "inactive"} />
                 </td>
+                <td className="px-4 py-3 text-right">
+                  <RowDeleteButton
+                    endpoint={`/api/producers/${p.id}`}
+                    confirmLabel={`Delete ${p.name}? Only possible if no product references it.`}
+                  />
+                </td>
               </tr>
             ))}
             {producers.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-10 text-center text-sage">
+                <td colSpan={6} className="px-4 py-10 text-center text-sage">
                   No producers match your search.
                 </td>
               </tr>

@@ -1,6 +1,6 @@
-# N-Agro Traceability Platform
+# Himalayan Supervores Traceability Platform
 
-A real, usable farm-to-export traceability platform for a Nepalese agricultural
+A real, usable farm-to-export traceability platform for Himalayan Supervores, a Nepalese agricultural
 exporter: producers, products, lots, GS1-compliant QR Codes, and a public
 mobile page that opens when a customer scans a code.
 
@@ -66,7 +66,7 @@ implementation against the official GS1 documentation:
 
 | Term | What it is | Who defines it |
 |---|---|---|
-| **GTIN** | The number identifying *what* a trade item is (e.g. "5 kg carton of Alphonso mango from N-Agro") | GS1, via a Company Prefix licensed to your company |
+| **GTIN** | The number identifying *what* a trade item is (e.g. "5 kg carton of Alphonso mango from Himalayan Supervores") | GS1, via a Company Prefix licensed to your company |
 | **SKU** | Your own internal warehouse/ERP code — free-form, means nothing outside your company | You — stored in `Product.sku`, never printed on the QR Code |
 | **QR Code** | Just a barcode symbol — a container for data, no inherent meaning | ISO/IEC 18004 (the QR symbol standard itself) |
 | **GS1 Digital Link** | A URL structure that encodes GS1 Application Identifiers, so the same QR Code that a GS1 scanner reads as structured data also opens as a normal web page | GS1 |
@@ -79,7 +79,7 @@ The same explanation is repeated as inline comments at the top of
 ## 3. Project structure
 
 ```
-n-agro/
+himalayan-supervores/
 ├─ prisma/
 │  ├─ schema.prisma        # Producer, Product, Lot, QrCode, AdminUser, Settings
 │  └─ seed.ts               # demo data (see §11)
@@ -118,6 +118,8 @@ n-agro/
 | `/api/qrcodes/generate` | POST | `{ productId, lotId? }` → creates or reuses the QR Code |
 | `/api/qrcodes/[id]/image` | GET | `?format=png\|svg`, streamed on demand |
 | `/api/qrcodes/[id]` | PATCH, DELETE | activate/deactivate or remove |
+| `/api/barcodes/gs1` | GET | `?productId=&format=png\|svg` — retail EAN-13/ITF-14 barcode |
+| `/api/barcodes/gs1-128` | GET | `?productId=&lotId=&format=png\|svg` — logistics GS1-128 barcode |
 | `/api/import/products` | POST | `{ csv: string }`, bulk product creation |
 | `/api/export/products`, `/api/export/lots` | GET | CSV download |
 | `/api/settings` | GET, PATCH | company name + Digital Link domain |
@@ -192,7 +194,7 @@ cp .env.example .env
 
 # 3a. Option A — local Postgres via Docker
 docker compose up -d
-# DATABASE_URL in .env is already correct for this (localhost:5432/nagro)
+# DATABASE_URL in .env is already correct for this (localhost:5432/himalayan_supervores)
 
 # 3b. Option B — no Docker: use a free hosted Postgres (Neon/Supabase),
 #     paste its connection string into DATABASE_URL instead.
@@ -246,10 +248,10 @@ seeded batch.
    production `DATABASE_URL` (from your machine, or a one-off Vercel/CI
    job) to create the schema and initial admin account.
 4. In **Admin → Settings**, set the **domain** field to your real domain
-   (e.g. `trace.n-agro.com`) — this is what gets baked into every QR Code
+   (e.g. `trace.himalayansupervores.com`) — this is what gets baked into every QR Code
    generated from then on.
 5. Point your own domain at Vercel (Vercel's dashboard walks through the
-   DNS records) so QR Codes read `n-agro.com`, not `something.vercel.app`.
+   DNS records) so QR Codes read `himalayansupervores.com`, not `something.vercel.app`.
 
 **Alternatives:** Railway or Render can host both the app and a Postgres
 instance in one place if you'd rather not split across two providers — the
@@ -338,6 +340,27 @@ Editing the product or lot afterwards (new photo, corrected certification,
 updated harvest date) never requires reprinting — the same QR Code keeps
 resolving to the updated information, which was the whole point of using
 GS1 Digital Link instead of a static per-print image.
+
+## 14bis. GS1 Barcode and GS1-128 (linear barcodes)
+
+Beyond the QR Code, two more code types live under their own tabs in the
+sidebar, for cases where a QR Code isn't the right tool:
+
+- **Admin → GS1 Barcode**: the classic black-and-white striped barcode
+  (EAN-13) encoding a product's GTIN alone — what a retail point-of-sale
+  scanner reads. If the GTIN is a genuine 14-digit case-level number (not
+  padded from a shorter GTIN), it renders as ITF-14 instead, since EAN-13
+  physically cannot carry 14 digits.
+- **Admin → GS1-128**: a Code 128 barcode carrying GS1 Application
+  Identifiers — GTIN, and when you pick a lot, also its batch/lot number,
+  packing date, and net weight (if recorded in kg). This is the barcode
+  used on shipping cartons and pallet labels for warehouse/logistics
+  scanning, distinct from the retail barcode above.
+
+Both pages let you pick a product (and, for GS1-128, optionally a lot) and
+immediately preview the barcode, with PNG/SVG download buttons — no
+separate "generate" step, since a linear barcode's content is deterministic
+from the product/lot data already on file.
 
 ---
 

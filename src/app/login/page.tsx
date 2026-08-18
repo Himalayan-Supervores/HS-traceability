@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Leaf, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -37,11 +37,8 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-pine-900 px-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center text-center">
-          <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-marigold-500">
-            <Leaf className="h-5 w-5 text-white" />
-          </div>
-          <h1 className="font-display text-2xl text-white">N-Agro</h1>
-          <p className="mt-1 text-sm text-pine-200">Traceability administration</p>
+          <img src="/logo.png" alt="Himalayan Supervores" className="mb-3 h-16 w-auto" />
+          <p className="text-sm text-pine-200">Traceability administration</p>
         </div>
 
         <form onSubmit={handleSubmit} className="card space-y-4 p-6">
@@ -57,7 +54,7 @@ export default function LoginPage() {
               className="field-input"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@n-agro.example"
+              placeholder="admin@himalayansupervores.example"
             />
           </div>
           <div>

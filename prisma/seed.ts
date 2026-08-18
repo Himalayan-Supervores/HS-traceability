@@ -14,7 +14,7 @@ const db = new PrismaClient();
 // ---------------------------------------------------------------------------
 
 async function main() {
-  const adminEmail = process.env.SEED_ADMIN_EMAIL || "admin@n-agro.example";
+  const adminEmail = process.env.SEED_ADMIN_EMAIL || "admin@himalayansupervores.example";
   const adminPassword = process.env.SEED_ADMIN_PASSWORD || "ChangeMe123!";
 
   await db.adminUser.upsert({
@@ -22,7 +22,7 @@ async function main() {
     update: {},
     create: {
       email: adminEmail,
-      name: "N-Agro Administrator",
+      name: "Himalayan Supervores Administrator",
       passwordHash: await bcrypt.hash(adminPassword, 10),
     },
   });
@@ -33,10 +33,10 @@ async function main() {
     update: {},
     create: {
       id: "singleton",
-      companyName: "N-Agro Export Pvt. Ltd.",
+      companyName: "Himalayan Supervores",
       domain: process.env.NEXT_PUBLIC_BASE_URL?.replace(/^https?:\/\//, "") || "localhost:3000",
       country: "Nepal",
-      contactEmail: "export@n-agro.example",
+      contactEmail: "export@himalayansupervores.example",
     },
   });
 

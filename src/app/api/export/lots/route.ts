@@ -32,7 +32,7 @@ export async function GET() {
   return new NextResponse(csv, {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
-      "Content-Disposition": `attachment; filename="n-agro-lots-${new Date().toISOString().slice(0, 10)}.csv"`,
+      "Content-Disposition": `attachment; filename="himalayan-supervores-lots-${new Date().toISOString().slice(0, 10)}.csv"`,
     },
   });
 }

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Leaf } from "lucide-react";
 
 export function PublicShell({
   companyName,
@@ -11,20 +10,15 @@ export function PublicShell({
   return (
     <div className="min-h-screen bg-pine-900">
       <div className="mx-auto max-w-md px-4 py-6 sm:max-w-lg sm:py-10">
-        <header className="mb-6 flex items-center justify-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-marigold-500">
-            <Leaf className="h-4 w-4 text-white" />
-          </div>
-          <div className="text-center">
-            <p className="font-display text-lg leading-none text-white">{companyName}</p>
-            <p className="label-eyebrow text-pine-300">Traceability</p>
-          </div>
+        <header className="mb-6 flex flex-col items-center justify-center gap-1">
+          <img src="/logo.png" alt={companyName} className="h-14 w-auto" />
+          <p className="label-eyebrow text-pine-300">Traceability</p>
         </header>
 
         <div className="rounded-2xl bg-paper shadow-xl">{children}</div>
 
         <footer className="mt-6 text-center text-xs text-pine-300">
-          <p>Powered by GS1 Digital Link — scan any N-Agro QR Code to verify origin.</p>
+          <p>Powered by GS1 Digital Link — scan any {companyName} QR Code to verify origin.</p>
         </footer>
       </div>
     </div>

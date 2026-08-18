@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// N-Agro Traceability — Prisma schema
+// Himalayan Supervores — Traceability schema
 //
 // Database: PostgreSQL (recommended for production).
 // For a zero-install local test, you can switch `provider` below to
@@ -31,8 +31,8 @@ model AdminUser {
 /// build GS1 Digital Link URLs (https://{domain}/01/{GTIN}...).
 model Settings {
   id           String  @id @default("singleton")
-  companyName  String  @default("N-Agro Export Pvt. Ltd.")
-  domain       String  @default("n-agro-demo.vercel.app")
+  companyName  String  @default("Himalayan Supervores")
+  domain       String  @default("himalayan-supervores-demo.vercel.app")
   country      String  @default("Nepal")
   contactEmail String?
   contactPhone String?

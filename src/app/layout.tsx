@@ -25,7 +25,7 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "N-Agro Traceability",
+  title: "Himalayan Supervores — Traceability",
   description: "Farm-to-export traceability platform for Nepalese agricultural products.",
 };
 

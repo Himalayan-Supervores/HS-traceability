@@ -60,6 +60,43 @@ export function StatusBadge({ status }: { status: string }) {
   );
 }
 
+export function RowDeleteButton({ endpoint, confirmLabel }: { endpoint: string; confirmLabel: string }) {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleDelete(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!window.confirm(confirmLabel)) return;
+    setLoading(true);
+    setError(null);
+    const res = await fetch(endpoint, { method: "DELETE" });
+    setLoading(false);
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      setError(data.error || "Delete failed");
+      return;
+    }
+    router.refresh();
+  }
+
+  return (
+    <span className="inline-flex items-center gap-2">
+      <button
+        type="button"
+        onClick={handleDelete}
+        disabled={loading}
+        title="Delete"
+        className="rounded p-1.5 text-ink/40 transition hover:bg-red-50 hover:text-red-700 disabled:opacity-50"
+      >
+        {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+      </button>
+      {error && <span className="text-xs text-red-600">{error}</span>}
+    </span>
+  );
+}
+
 export function DeleteButton({
   endpoint,
   confirmLabel,

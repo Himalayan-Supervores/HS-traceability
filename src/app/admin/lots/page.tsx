@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Plus, Search, Download } from "lucide-react";
 import { db } from "@/lib/db";
-import { PageHeader, StatusBadge } from "@/components/admin/ui";
+import { PageHeader, StatusBadge, RowDeleteButton } from "@/components/admin/ui";
 import { formatDate } from "@/lib/utils";
 import type { Prisma } from "@prisma/client";
 
@@ -91,6 +91,7 @@ export default async function LotsPage({
               <th className="px-4 py-3">Harvest</th>
               <th className="px-4 py-3">Destination</th>
               <th className="px-4 py-3">Status</th>
+              <th className="px-4 py-3" />
             </tr>
           </thead>
           <tbody className="divide-y divide-line">
@@ -108,11 +109,17 @@ export default async function LotsPage({
                 <td className="px-4 py-3">
                   <StatusBadge status={lot.status} />
                 </td>
+                <td className="px-4 py-3 text-right">
+                  <RowDeleteButton
+                    endpoint={`/api/lots/${lot.id}`}
+                    confirmLabel={`Delete lot ${lot.lotNumber}? This also removes its QR Codes.`}
+                  />
+                </td>
               </tr>
             ))}
             {lots.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-10 text-center text-sage">
+                <td colSpan={7} className="px-4 py-10 text-center text-sage">
                   No lots match your search.
                 </td>
               </tr>
