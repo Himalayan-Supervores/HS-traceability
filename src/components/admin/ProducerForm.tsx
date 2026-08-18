@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 export type ProducerFormValues = {
   id?: string;
@@ -153,8 +154,8 @@ export function ProducerForm({ initial }: { initial?: Partial<ProducerFormValues
         />
       </Field>
 
-      <Field label="Photo URL">
-        <input className="field-input" value={values.photoUrl} onChange={(e) => set("photoUrl", e.target.value)} />
+      <Field label="Photo">
+        <ImageUpload value={values.photoUrl} onChange={(url) => set("photoUrl", url)} />
       </Field>
 
       <Field label="Description">
