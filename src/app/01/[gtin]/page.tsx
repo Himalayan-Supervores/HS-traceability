@@ -88,21 +88,18 @@ export default async function ProductPublicPage({ params }: { params: { gtin: st
           </div>
         )}
 
-                {latestLot && (
+                    {latestLot && (
           <div className="mt-6 border-t border-line pt-4">
             <p className="label-eyebrow mb-2 flex items-center gap-1.5">
               <Package className="h-3.5 w-3.5" /> Batch traceability
             </p>
-            <InfoRow label="Lot number" value={latestLot.lotNumber} />
-            <InfoRow label="Harvest date" value={formatDate(latestLot.harvestDate)} />
-            <InfoRow label="Packing date" value={formatDate(latestLot.packingDate)} />
-            <InfoRow label="Shipping date" value={formatDate(latestLot.shippingDate)} />
-            <InfoRow label="Best before" value={formatDate(latestLot.expiryDate)} />
-            <InfoRow label="Destination" value={latestLot.destination} />
-            <InfoRow label="Quantity" value={latestLot.quantity ? `${latestLot.quantity} ${latestLot.unit || ""}` : undefined} />
-            <InfoRow label="Storage conditions" value={latestLot.storageConditions} />
-
-             <JourneyTimeline events={latestLot.events} />
+            <InfoRow label="Latest lot" value={latestLot.lotNumber} />
+            <Link
+              href={`/01/${product.gtin}/10/${latestLot.lotNumber}`}
+              className="mt-3 inline-block rounded-md border border-line px-3 py-2 text-sm text-pine-700 hover:bg-pine-50/60 hover:underline"
+            >
+              View full batch certificate →
+            </Link>
           </div>
         )}
       </div>

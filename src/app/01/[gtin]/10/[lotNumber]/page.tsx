@@ -97,10 +97,7 @@ export default async function LotPublicPage({
           <p className="label-eyebrow mb-2 flex items-center gap-1.5">
             <Package className="h-3.5 w-3.5" /> Batch traceability
           </p>
-          <InfoRow label="Lot number" value={lot.lotNumber} />
-          <InfoRow label="Harvest date" value={formatDate(lot.harvestDate)} />
-          <InfoRow label="Packing date" value={formatDate(lot.packingDate)} />
-          <InfoRow label="Shipping date" value={formatDate(lot.shippingDate)} />
+                    <InfoRow label="Lot number" value={lot.lotNumber} />
           <InfoRow label="Best before" value={formatDate(lot.expiryDate)} />
           <InfoRow label="Destination" value={lot.destination} />
           <InfoRow
