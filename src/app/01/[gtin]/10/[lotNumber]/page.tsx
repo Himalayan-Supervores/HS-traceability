@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { PublicShell, InfoRow } from "@/components/public/PublicShell";
 import { csvList, formatDate } from "@/lib/utils";
 import { MapPin, ShieldCheck, Package } from "lucide-react";
+import { JourneyTimeline } from "@/components/public/JourneyTimeline";
 
 export const dynamic = "force-dynamic";
 
@@ -108,22 +109,7 @@ export default async function LotPublicPage({
           />
           <InfoRow label="Storage conditions" value={lot.storageConditions} />
 
-          {lot.events.length > 0 && (
-            <div className="mt-4">
-              <p className="label-eyebrow mb-2">Journey timeline</p>
-              <ul className="space-y-2">
-                {lot.events.map((ev) => (
-                  <li key={ev.id} className="border-l-2 border-pine-400 pl-3">
-                    <p className="text-sm font-medium text-ink">{ev.type}</p>
-                    <p className="text-xs text-sage">
-                      {formatDate(ev.eventDate)}
-                      {ev.location ? ` — ${ev.location}` : ""}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+                   <JourneyTimeline events={lot.events} />
         </div>
       </div>
     </PublicShell>
