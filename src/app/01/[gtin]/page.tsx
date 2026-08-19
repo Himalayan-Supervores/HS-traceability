@@ -5,6 +5,7 @@ import { PublicShell, InfoRow } from "@/components/public/PublicShell";
 import { csvList, formatDate } from "@/lib/utils";
 import { MapPin, ShieldCheck, Package } from "lucide-react";
 import { JourneyTimeline } from "@/components/public/JourneyTimeline";
+import { LocationMap } from "@/components/public/LocationMap";
 
 export const dynamic = "force-dynamic";
 
@@ -76,7 +77,7 @@ export default async function ProductPublicPage({ params }: { params: { gtin: st
           <InfoRow label="Packaging" value={product.packagingType} />
         </div>
 
-        {producer && (
+                {producer && (
           <div className="mt-6 border-t border-line pt-4">
             <p className="label-eyebrow mb-2">Producer</p>
             <Link
@@ -85,6 +86,9 @@ export default async function ProductPublicPage({ params }: { params: { gtin: st
             >
               {producer.name} — <span className="text-sage">{producer.farmName}</span>
             </Link>
+            {producer.gpsLat != null && producer.gpsLng != null && (
+              <LocationMap lat={producer.gpsLat} lng={producer.gpsLng} label={producer.farmName} />
+            )}
           </div>
         )}
 

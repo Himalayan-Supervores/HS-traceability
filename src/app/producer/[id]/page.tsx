@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { PublicShell, InfoRow } from "@/components/public/PublicShell";
 import { csvList } from "@/lib/utils";
 import { MapPin, ShieldCheck } from "lucide-react";
+import { LocationMap } from "@/components/public/LocationMap";
 
 export const dynamic = "force-dynamic";
 
@@ -36,10 +37,13 @@ export default async function ProducerPublicPage({ params }: { params: { id: str
         <h1 className="font-display text-3xl leading-tight text-ink">{producer.name}</h1>
         <p className="mt-0.5 font-display italic text-ink/60">{producer.farmName}</p>
 
-        {location && (
+                {location && (
           <p className="mt-3 flex items-center gap-1.5 text-sm text-sage">
             <MapPin className="h-4 w-4" /> {location}, {producer.country}
           </p>
+        )}
+        {producer.gpsLat != null && producer.gpsLng != null && (
+          <LocationMap lat={producer.gpsLat} lng={producer.gpsLng} label={producer.farmName} />
         )}
 
         {producer.description && (
