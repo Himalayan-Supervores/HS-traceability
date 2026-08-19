@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { PageHeader, DeleteButton } from "@/components/admin/ui";
 import { LotForm } from "@/components/admin/LotForm";
 import { QrCodeCard } from "@/components/admin/QrCodeCard";
+import { LotEvents } from "@/components/admin/LotEvents";
 
 function toDateInput(d: Date | null): string {
   if (!d) return "";
@@ -11,9 +12,12 @@ function toDateInput(d: Date | null): string {
 
 export default async function LotDetailPage({ params }: { params: { id: string } }) {
   const [lot, products, producers] = await Promise.all([
-    db.lot.findUnique({
+        db.lot.findUnique({
       where: { id: params.id },
-      include: { qrCodes: { where: { isActive: true }, orderBy: { createdAt: "desc" }, take: 1 } },
+      include: {
+        qrCodes: { where: { isActive: true }, orderBy: { createdAt: "desc" }, take: 1 },
+        events: { orderBy: { eventDate: "asc" } },
+      },
     }),
     db.product.findMany({ orderBy: { name: "asc" } }),
     db.producer.findMany({ orderBy: { name: "asc" } }),
@@ -63,7 +67,19 @@ export default async function LotDetailPage({ params }: { params: { id: string }
           }}
         />
 
-        <QrCodeCard productId={lot.productId} lotId={lot.id} initialQrCode={qrCode} />
+                <div className="space-y-6">
+          <QrCodeCard productId={lot.productId} lotId={lot.id} initialQrCode={qrCode} />
+          <LotEvents
+            lotId={lot.id}
+            initialEvents={lot.events.map((e) => ({
+              id: e.id,
+              type: e.type,
+              eventDate: e.eventDate.toISOString(),
+              location: e.location,
+              note: e.note,
+            }))}
+          />
+        </div>
       </div>
     </div>
   );

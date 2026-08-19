@@ -129,6 +129,7 @@ model Lot {
   updatedAt         DateTime  @updatedAt
 
   qrCodes QrCode[]
+   events  LotEvent[]
 
   @@index([status])
   @@index([productId])
@@ -149,5 +150,21 @@ model QrCode {
   createdAt      DateTime @default(now())
 
   @@index([productId])
+  @@index([lotId])
+}
+/// A single traceability event in a lot's timeline (harvest, packing,
+/// shipment, customs clearance, delivery, etc). Kept as a history so a lot's
+/// full journey can be reconstructed, rather than overwriting a single status.
+model LotEvent {
+  id        String   @id @default(cuid())
+  lotId     String
+  lot       Lot      @relation(fields: [lotId], references: [id], onDelete: Cascade)
+  /// Free-text event type, e.g. "Harvested", "Packed", "Shipped", "Customs cleared", "Delivered"
+  type      String
+  eventDate DateTime
+  location  String?
+  note      String?
+  createdAt DateTime @default(now())
+
   @@index([lotId])
 }
