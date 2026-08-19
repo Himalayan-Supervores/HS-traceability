@@ -59,6 +59,8 @@ export default async function ProducerDetailPage({ params }: { params: { id: str
             description: producer.description ?? "",
             isActive: producer.isActive,
             isPublic: producer.isPublic,
+            gpsLat: producer.gpsLat?.toString() ?? "",
+            gpsLng: producer.gpsLng?.toString() ?? "",
           }}
         />
 

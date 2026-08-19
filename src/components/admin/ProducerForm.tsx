@@ -14,6 +14,8 @@ export type ProducerFormValues = {
   district: string;
   municipality: string;
   address: string;
+  gpsLat: string;
+  gpsLng: string;
   contactName: string;
   contactPhone: string;
   email: string;
@@ -32,6 +34,8 @@ const EMPTY: ProducerFormValues = {
   district: "",
   municipality: "",
   address: "",
+  gpsLat: "",
+  gpsLng: "",
   contactName: "",
   contactPhone: "",
   email: "",
@@ -63,7 +67,11 @@ export function ProducerForm({ initial }: { initial?: Partial<ProducerFormValues
     const res = await fetch(url, {
       method,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
+            body: JSON.stringify({
+        ...values,
+        gpsLat: values.gpsLat ? Number(values.gpsLat) : null,
+        gpsLng: values.gpsLng ? Number(values.gpsLng) : null,
+      }),
     });
     setLoading(false);
 
@@ -116,8 +124,29 @@ export function ProducerForm({ initial }: { initial?: Partial<ProducerFormValues
             onChange={(e) => set("municipality", e.target.value)}
           />
         </Field>
-        <Field label="Address">
+                <Field label="Address">
           <input className="field-input" value={values.address} onChange={(e) => set("address", e.target.value)} />
+        </Field>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field label="GPS latitude" hint="e.g. 27.6172 (find it on Google Maps: right-click → coordinates)">
+          <input
+            type="number"
+            step="any"
+            className="field-input"
+            value={values.gpsLat}
+            onChange={(e) => set("gpsLat", e.target.value)}
+          />
+        </Field>
+        <Field label="GPS longitude" hint="e.g. 84.4303">
+          <input
+            type="number"
+            step="any"
+            className="field-input"
+            value={values.gpsLng}
+            onChange={(e) => set("gpsLng", e.target.value)}
+          />
         </Field>
       </div>
 
