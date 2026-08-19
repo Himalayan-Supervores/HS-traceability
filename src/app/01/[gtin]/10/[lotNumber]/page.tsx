@@ -5,6 +5,7 @@ import { PublicShell, InfoRow } from "@/components/public/PublicShell";
 import { csvList, formatDate } from "@/lib/utils";
 import { MapPin, ShieldCheck, Package } from "lucide-react";
 import { JourneyTimeline } from "@/components/public/JourneyTimeline";
+import { ProductPhotoBadge } from "@/components/public/ProductPhotoBadge";
 
 export const dynamic = "force-dynamic";
 
@@ -42,11 +43,12 @@ export default async function LotPublicPage({
   return (
     <PublicShell companyName={settingsResult.companyName}>
       <div className="p-6">
-        {product.photoUrl && (
-          <img
-            src={product.photoUrl}
-            alt={product.name}
-            className="mb-5 aspect-[4/3] w-full rounded-xl object-cover"
+                {product.photoUrl && (
+          <ProductPhotoBadge
+            photoUrl={product.photoUrl}
+            productName={product.name}
+            originRegion={product.originRegion}
+            originCountry={product.originCountry}
           />
         )}
 

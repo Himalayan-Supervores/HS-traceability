@@ -6,6 +6,7 @@ import { csvList, formatDate } from "@/lib/utils";
 import { MapPin, ShieldCheck, Package } from "lucide-react";
 import { JourneyTimeline } from "@/components/public/JourneyTimeline";
 import { LocationMap } from "@/components/public/LocationMap";
+import { ProductPhotoBadge } from "@/components/public/ProductPhotoBadge";
 
 export const dynamic = "force-dynamic";
 
@@ -36,12 +37,13 @@ export default async function ProductPublicPage({ params }: { params: { gtin: st
     <PublicShell companyName={settings.companyName}>
       <div className="p-6">
         {product.photoUrl && (
-          <img
-            src={product.photoUrl}
-            alt={product.name}
-            className="mb-5 aspect-[4/3] w-full rounded-xl object-cover"
-          />
-        )}
+  <ProductPhotoBadge
+    photoUrl={product.photoUrl}
+    productName={product.name}
+    originRegion={product.originRegion}
+    originCountry={product.originCountry}
+  />
+)}
 
         <p className="label-eyebrow">Product</p>
         <h1 className="font-display text-3xl leading-tight text-ink">{product.name}</h1>
