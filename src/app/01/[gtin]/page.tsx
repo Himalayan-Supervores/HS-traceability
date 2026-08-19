@@ -18,7 +18,7 @@ export default async function ProductPublicPage({ params }: { params: { gtin: st
       },
       include: {
         producer: true,
-        lots: { orderBy: { createdAt: "desc" } },
+        lots: { orderBy: { createdAt: "desc" }, include: { events: { orderBy: { eventDate: "asc" } } } },
       },
     }),
     db.settings.upsert({ where: { id: "singleton" }, update: {}, create: { id: "singleton" } }),
@@ -87,7 +87,7 @@ export default async function ProductPublicPage({ params }: { params: { gtin: st
           </div>
         )}
 
-        {latestLot && (
+                {latestLot && (
           <div className="mt-6 border-t border-line pt-4">
             <p className="label-eyebrow mb-2 flex items-center gap-1.5">
               <Package className="h-3.5 w-3.5" /> Batch traceability
@@ -100,6 +100,23 @@ export default async function ProductPublicPage({ params }: { params: { gtin: st
             <InfoRow label="Destination" value={latestLot.destination} />
             <InfoRow label="Quantity" value={latestLot.quantity ? `${latestLot.quantity} ${latestLot.unit || ""}` : undefined} />
             <InfoRow label="Storage conditions" value={latestLot.storageConditions} />
+
+            {latestLot.events.length > 0 && (
+              <div className="mt-4">
+                <p className="label-eyebrow mb-2">Journey timeline</p>
+                <ul className="space-y-2">
+                  {latestLot.events.map((ev) => (
+                    <li key={ev.id} className="border-l-2 border-pine-400 pl-3">
+                      <p className="text-sm font-medium text-ink">{ev.type}</p>
+                      <p className="text-xs text-sage">
+                        {formatDate(ev.eventDate)}
+                        {ev.location ? ` — ${ev.location}` : ""}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         )}
       </div>
