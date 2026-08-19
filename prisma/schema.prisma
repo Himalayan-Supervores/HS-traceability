@@ -118,6 +118,7 @@ model Lot {
   harvestDate       DateTime?
   packingDate       DateTime?
   shippingDate      DateTime?
+  expiryDate        DateTime?
   quantity          Float?
   unit              String?
   destination       String?

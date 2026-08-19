@@ -54,6 +54,7 @@ export default async function LotDetailPage({ params }: { params: { id: string }
             harvestDate: toDateInput(lot.harvestDate),
             packingDate: toDateInput(lot.packingDate),
             shippingDate: toDateInput(lot.shippingDate),
+            expiryDate: toDateInput(lot.expiryDate),
             quantity: lot.quantity?.toString() ?? "",
             unit: lot.unit ?? "",
             destination: lot.destination ?? "",

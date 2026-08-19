@@ -15,6 +15,7 @@ export type LotFormValues = {
   harvestDate: string;
   packingDate: string;
   shippingDate: string;
+  expiryDate: string;
   quantity: string;
   unit: string;
   destination: string;
@@ -29,6 +30,7 @@ const EMPTY: LotFormValues = {
   harvestDate: "",
   packingDate: "",
   shippingDate: "",
+  expiryDate: "",
   quantity: "",
   unit: "kg",
   destination: "",
@@ -76,6 +78,7 @@ export function LotForm({
         harvestDate: values.harvestDate || null,
         packingDate: values.packingDate || null,
         shippingDate: values.shippingDate || null,
+        expiryDate: values.expiryDate || null,
         quantity: values.quantity ? Number(values.quantity) : null,
       }),
     });
@@ -134,7 +137,7 @@ export function LotForm({
         </select>
       </Field>
 
-      <div className="grid gap-4 sm:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-4">
         <Field label="Harvest date">
           <input
             type="date"
@@ -157,6 +160,14 @@ export function LotForm({
             className="field-input"
             value={values.shippingDate}
             onChange={(e) => set("shippingDate", e.target.value)}
+          />
+        </Field>
+        <Field label="Expiry / best-before date">
+          <input
+            type="date"
+            className="field-input"
+            value={values.expiryDate}
+            onChange={(e) => set("expiryDate", e.target.value)}
           />
         </Field>
       </div>

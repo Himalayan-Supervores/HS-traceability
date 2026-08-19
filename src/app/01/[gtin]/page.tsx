@@ -96,6 +96,7 @@ export default async function ProductPublicPage({ params }: { params: { gtin: st
             <InfoRow label="Harvest date" value={formatDate(latestLot.harvestDate)} />
             <InfoRow label="Packing date" value={formatDate(latestLot.packingDate)} />
             <InfoRow label="Shipping date" value={formatDate(latestLot.shippingDate)} />
+            <InfoRow label="Best before" value={formatDate(latestLot.expiryDate)} />
             <InfoRow label="Destination" value={latestLot.destination} />
             <InfoRow label="Quantity" value={latestLot.quantity ? `${latestLot.quantity} ${latestLot.unit || ""}` : undefined} />
             <InfoRow label="Storage conditions" value={latestLot.storageConditions} />

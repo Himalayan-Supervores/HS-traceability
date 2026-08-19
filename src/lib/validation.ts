@@ -53,6 +53,7 @@ export const lotSchema = z.object({
   harvestDate: z.coerce.date().optional().nullable(),
   packingDate: z.coerce.date().optional().nullable(),
   shippingDate: z.coerce.date().optional().nullable(),
+  expiryDate: z.coerce.date().optional().nullable(),
   quantity: z.coerce.number().optional().nullable(),
   unit: z.string().optional().nullable(),
   destination: z.string().optional().nullable(),
